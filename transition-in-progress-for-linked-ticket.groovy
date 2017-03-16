@@ -3,9 +3,9 @@ import com.atlassian.jira.workflow.WorkflowTransitionUtil;
 import com.atlassian.jira.workflow.WorkflowTransitionUtilImpl;
 import com.atlassian.jira.util.JiraUtils;
 import com.atlassian.jira.issue.MutableIssue;
-import com.atlassian.jira.user.ApplicationUser
-
+import com.atlassian.jira.user.ApplicationUser;
 import org.apache.log4j.Category
+
 def Category log = Category.getInstance("com.onresolve.jira.groovy.PostFunction")
 log.setLevel(org.apache.log4j.Level.DEBUG)
 
@@ -33,12 +33,12 @@ def transitionTicketsImplementedByCurrentOne(int transitionId, List<String> fina
                 for (def issueLinkNested : issueLinkManager.getInwardLinks(destinationIssue.id)) {
                     def sourceObject = issueLinkNested.getSourceObject();
                     def statusName = sourceObject.getStatus().getName();
-                    if (sourceObject.getKey() == issue.getKey()) {
+                    if (sourceObject.getId() == issue.id) {
                         continue;
                     }
                     if (issueLinkNested.issueLinkType.name.equalsIgnoreCase(implementRelationship) && !finalStatuses.contains(statusName)) {
                         allInwardImplementLinksDone = false;
-                        log.debug "Linked issue " + sourceObject.getKey() + " is not done. Will not transition " + issue.getKey();
+                        log.debug "Linked issue " + sourceObject.getKey() + " is not done."
                         break;
                     }
                 }
