@@ -45,8 +45,10 @@ def transitionTicketsImplementedByCurrentOne(int transitionId, List<String> fina
 
                 if (allInwardImplementLinksDone) {
                     workflowTransitionUtil.setIssue(destinationIssue);
-                    log.debug "Issue is set. Assigning the ticket to: " + user.getKey();
-                    workflowTransitionUtil.setUserkey(user.getKey());
+                    if (user != null) {
+                        log.debug "Issue is set. Assigning the ticket to: " + user.getKey();
+                        workflowTransitionUtil.setUserkey(user.getKey());
+                    }
                     log.debug "Assigned user is set"
                     workflowTransitionUtil.setAction(transitionId)
                     log.debug "Action is set"
